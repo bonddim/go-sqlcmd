@@ -1,0 +1,31 @@
+# The workflow is used to check for new releases of the microsoft/go-sqlcmd tool.
+# If a new release is available, the workflow creates a new release in the current repository.
+
+name: Release
+
+on:
+  schedule:
+    - cron: '0 0,12 * * *'
+
+permissions:
+  contents: write
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check releases
+        id: check
+        run: |
+          latest() { gh release list -R ${1} --exclude-pre-releases --limit 1 --json tagName --jq '.[] | .tagName'; }
+          echo image=$(latest "${{ github.repository }}") | tee -a $GITHUB_OUTPUT
+          echo tool=$(latest "microsoft/go-sqlcmd") | tee -a $GITHUB_OUTPUT
+
+      - name: Create release
+        if: ${{ steps.check.outputs.tool != steps.check.outputs.image }}
+        run: |
+          echo "Creating release for ${{ steps.check.outputs.tool }}"
+          gh release create ${{ steps.check.outputs.tool }} --title ${{ steps.check.outputs.tool }} --latest --repo ${{ github.repository }}
