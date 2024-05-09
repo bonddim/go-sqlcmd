@@ -7,18 +7,20 @@ on:
   schedule:
     - cron: '0 0,12 * * *'
 
-permissions:
-  contents: write
-
-env:
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app
+        with:
+          app-id: ${{ vars.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
       - name: Check releases
         id: check
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
         run: |
           latest() { gh release list -R ${1} --exclude-pre-releases --limit 1 --json tagName --jq '.[] | .tagName'; }
           echo image=$(latest "${{ github.repository }}") | tee -a $GITHUB_OUTPUT
@@ -26,6 +28,12 @@ jobs:
 
       - name: Create release
         if: ${{ steps.check.outputs.tool != steps.check.outputs.image }}
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
         run: |
           echo "Creating release for ${{ steps.check.outputs.tool }}"
-          gh release create ${{ steps.check.outputs.tool }} --title ${{ steps.check.outputs.tool }} --latest --repo ${{ github.repository }}
+          gh release create ${{ steps.check.outputs.tool }} \
+            --latest \
+            --title ${{ steps.check.outputs.tool }} \
+            --notes "Check https://github.com/microsoft/go-sqlcmd/releases/tag/${{ steps.check.outputs.tool }}" \
+            --repo ${{ github.repository }}
