@@ -16,12 +16,21 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/go-sqlcmd",
       "fileMatch": [
-        "^Dockerfile$",
-        "^version"
+        "^Dockerfile$"
       ],
-      "matchStringsStrategy": "any",
       "matchStrings": [
-        "ARG VERSION=(?<currentValue>.+?)\\s",
+        "ARG VERSION=(?<currentValue>.+?)\\s"
+      ]
+    },
+    {
+      "customType": "regex",
+      "description": "Update sqlcmd version",
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "microsoft/go-sqlcmd",
+      "fileMatch": [
+        "^version$"
+      ],
+      "matchStrings": [
         "\\s(?<currentValue>v.+?)\\s"
       ]
     }
