@@ -10,10 +10,6 @@ on:
   release:
     types: [published]
 
-concurrency:
-  group: ${{ github.workflow }}
-  cancel-in-progress: false
-
 permissions:
   packages: write
 
@@ -55,5 +51,3 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           platforms: linux/amd64,linux/arm64,linux/s390x
           push: ${{ github.event_name == 'release' }}
-          build-args: |
-            VERSION=${{ github.event_name == 'release' && github.ref_name || 'v1.6.0' }}
