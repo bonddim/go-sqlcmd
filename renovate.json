@@ -4,6 +4,8 @@
     "config:recommended",
     ":disableDependencyDashboard"
   ],
+  "automerge": true,
+  "automergeStrategy": "squash",
   "enabledManagers": [
     "dockerfile",
     "github-actions",
