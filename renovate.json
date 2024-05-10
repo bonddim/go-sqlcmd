@@ -1,17 +1,28 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:recommended",
+    ":disableDependencyDashboard"
+  ],
+  "enabledManagers": [
+    "dockerfile",
+    "github-actions",
+    "custom.regex"
   ],
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Update _VERSION variables in Dockerfiles",
+      "description": "Update sqlcmd version",
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "microsoft/go-sqlcmd",
       "fileMatch": [
-        "^Dockerfile$"
+        "^Dockerfile$",
+        "^version"
       ],
+      "matchStringsStrategy": "any",
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>[a-z-]+?)(?: depName=(?<depName>.+?))? packageName=(?<packageName>.+?)(?: versioning=(?<versioning>[a-z-]+?))?\\s(?:ENV|ARG) .+?_VERSION=(?<currentValue>.+?)\\s"
+        "ARG VERSION=(?<currentValue>.+?)\\s",
+        "\\s(?<currentValue>v.+?)\\s"
       ]
     }
   ]
