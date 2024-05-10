@@ -1,39 +1,27 @@
-# The workflow is used to check for new releases of the microsoft/go-sqlcmd tool.
-# If a new release is available, the workflow creates a new release in the current repository.
-
+# The workflow is used to publish new release on every "version" file change.
 name: Release
 
 on:
-  schedule:
-    - cron: '0 0,12 * * *'
+  push:
+    branches: [main]
+    paths: [version]
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/create-github-app-token@v1
         id: app
         with:
           app-id: ${{ vars.GH_APP_ID }}
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
 
-      - name: Check releases
-        id: check
-        env:
-          GH_TOKEN: ${{ steps.app.outputs.token }}
-        run: |
-          latest() { gh release list -R ${1} --exclude-pre-releases --limit 1 --json tagName --jq '.[] | .tagName'; }
-          echo image=$(latest "${{ github.repository }}") | tee -a $GITHUB_OUTPUT
-          echo tool=$(latest "microsoft/go-sqlcmd") | tee -a $GITHUB_OUTPUT
-
       - name: Create release
-        if: ${{ steps.check.outputs.tool != steps.check.outputs.image }}
         env:
           GH_TOKEN: ${{ steps.app.outputs.token }}
         run: |
-          echo "Creating release for ${{ steps.check.outputs.tool }}"
-          gh release create ${{ steps.check.outputs.tool }} \
-            --latest \
-            --title ${{ steps.check.outputs.tool }} \
-            --notes "Check https://github.com/microsoft/go-sqlcmd/releases/tag/${{ steps.check.outputs.tool }}" \
-            --repo ${{ github.repository }}
+          set -u
+          . version
+          echo "Creating release for ${SQLCMD_VERSION}"
+          gh release create ${SQLCMD_VERSION} --latest
