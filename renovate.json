@@ -31,7 +31,7 @@
         "^version$"
       ],
       "matchStrings": [
-        "\\s(?<currentValue>v.+?)\\s"
+        "(?<currentValue>.+?)\\s?"
       ]
     }
   ]
