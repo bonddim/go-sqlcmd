@@ -1,5 +1,5 @@
 FROM --platform=${BUILDPLATFORM} alpine:3 AS tools
-ARG SQLCMD_VERSION=v1.6.0
+ARG SQLCMD_VERSION=v1.7.0
 ARG TARGETARCH
 RUN apk add jq --no-cache && \
   wget -c -O - $(wget -q -O - https://api.github.com/repos/microsoft/go-sqlcmd/releases/tags/${SQLCMD_VERSION} \
