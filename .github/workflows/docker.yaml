@@ -43,7 +43,7 @@ jobs:
             ${{ github.repository }}
             ghcr.io/${{ github.repository }}
 
-      - uses: docker/build-push-action@v5
+      - uses: docker/build-push-action@v6
         with:
           context: .
           annotations: ${{ steps.meta.outputs.annotations }}
