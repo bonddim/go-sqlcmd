@@ -1,9 +1,10 @@
 # [go-sqlcmd](https://github.com/microsoft/go-sqlcmd) docker image
 
-[![Docker](https://github.com/bonddim/go-sqlcmd/actions/workflows/docker.yaml/badge.svg?event=release)](https://github.com/bonddim/go-sqlcmd/actions/workflows/docker.yaml)
-![Docker Image Size](https://img.shields.io/docker/image-size/bonddim/go-sqlcmd)
-[![Docker Pulls](https://img.shields.io/docker/pulls/bonddim/go-sqlcmd)](https://hub.docker.com/r/bonddim/go-sqlcmd)
-[![GitHub Release](https://img.shields.io/github/v/release/bonddim/go-sqlcmd)](https://github.com/bonddim/go-sqlcmd/releases/latest)
+[docker-hub]: https://hub.docker.com/r/bonddim/go-sqlcmd
+[![Docker](https://github.com/bonddim/go-sqlcmd/actions/workflows/docker.yaml/badge.svg)](https://github.com/bonddim/go-sqlcmd/actions/workflows/docker.yaml)
+[![Docker Image Version](https://img.shields.io/docker/v/bonddim/go-sqlcmd)][docker-hub]
+[![Docker Image Size](https://img.shields.io/docker/image-size/bonddim/go-sqlcmd)][docker-hub]
+[![Docker Pulls](https://img.shields.io/docker/pulls/bonddim/go-sqlcmd)][docker-hub]
 [![GitHub License](https://img.shields.io/github/license/bonddim/go-sqlcmd)](https://github.com/bonddim/go-sqlcmd?tab=MIT-1-ov-file)
 
 ## About
