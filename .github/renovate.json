@@ -1,29 +1,17 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":disableDependencyDashboard"
-  ],
+  "extends": ["config:recommended", ":disableDependencyDashboard"],
   "automerge": true,
   "automergeStrategy": "squash",
-  "enabledManagers": [
-    "dockerfile",
-    "github-actions",
-    "custom.regex"
-  ],
+  "enabledManagers": ["custom.regex", "dockerfile", "github-actions"],
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Update sqlcmd version",
+      "description": ["Update sqlcmd version"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/go-sqlcmd",
-      "fileMatch": [
-        "^Dockerfile$",
-        "^version$"
-      ],
-      "matchStrings": [
-        "(?:ARG )?SQLCMD_VERSION=(?<currentValue>.+?)\\s"
-      ]
+      "fileMatch": ["^Dockerfile$"],
+      "matchStrings": ["ARG SQLCMD_VERSION=(?<currentValue>.+?)\\s"]
     }
   ]
 }
