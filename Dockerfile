@@ -6,7 +6,7 @@ RUN apk add --update-cache --no-cache curl jq xz && \
   jq -r --arg arch "${TARGETARCH}" '.assets[] | select(.name | test(".*linux.*" + $arch + ".*")).browser_download_url') \
   | tar -xj
 
-FROM gcr.io/distroless/static:nonroot@sha256:3a03fc0826340c7deb82d4755ca391bef5adcedb8892e58412e1a6008199fa91
+FROM gcr.io/distroless/static:nonroot@sha256:d71f4b239be2d412017b798a0a401c44c3049a3ca454838473a4c32ed076bfea
 COPY --from=tools /sqlcmd /sqlcmd
 USER nonroot:nonroot
 ENTRYPOINT ["/sqlcmd"]
