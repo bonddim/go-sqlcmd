@@ -13,5 +13,11 @@
       "fileMatch": ["^Dockerfile$"],
       "matchStrings": ["ARG SQLCMD_VERSION=(?<currentValue>.+?)\\s"]
     }
+  ],
+  "packageRules": [
+    {
+      "matchDepNames": ["microsoft/go-sqlcmd"],
+      "ignoreUnstable": false
+    }
   ]
 }
