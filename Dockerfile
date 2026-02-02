@@ -4,7 +4,7 @@ ARG TARGETARCH
 ADD https://github.com/microsoft/go-sqlcmd/releases/download/${SQLCMD_VERSION}/sqlcmd-linux-${TARGETARCH}.tar.bz2 sqlcmd.tar.bz2
 RUN tar -xvf sqlcmd.tar.bz2
 
-FROM gcr.io/distroless/static:nonroot@sha256:cba10d7abd3e203428e86f5b2d7fd5eb7d8987c387864ae4996cf97191b33764
+FROM gcr.io/distroless/static:nonroot@sha256:f9f84bd968430d7d35e8e6d55c40efb0b980829ec42920a49e60e65eac0d83fc
 COPY --from=tools /sqlcmd /sqlcmd
 USER 65532:65532
 ENTRYPOINT ["/sqlcmd"]
