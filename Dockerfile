@@ -1,5 +1,5 @@
 FROM --platform=${BUILDPLATFORM} busybox:stable AS tools
-ARG SQLCMD_VERSION=v1.9.0
+ARG SQLCMD_VERSION=v1.10.0
 ARG TARGETARCH
 ADD https://github.com/microsoft/go-sqlcmd/releases/download/${SQLCMD_VERSION}/sqlcmd-linux-${TARGETARCH}.tar.bz2 sqlcmd.tar.bz2
 RUN tar -xvf sqlcmd.tar.bz2
